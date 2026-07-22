@@ -1,0 +1,139 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  VERIFICATION_REQUIRED
+}
+
+enum VerificationStatus {
+  NONE
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          Role      @default(USER")
+  isBanned      Boolean   @default(false)
+  
+  // Standoff 2 Details
+  so2Id         String?   @unique
+  so2Nickname   String?
+  telegram      String?
+  phone         String?
+  
+  // Terms agreement
+  agreedTerms   Boolean   @default(false)
+  
+  // Stats
+  matchesCount  Int       @default(0)
+  winsCount     Int       @default(0)
+  tournamentWins Int      @default(0)
+
+  accounts      Account[]
+  sessions      Session[]
+  applications  Application[]
+  verifications Verification[]
+  notifications Notification[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Tournament {
+  id          String   @id @default(cuid())
+  title       String
+  prizePool   String   @default("20 000 Gold")
+  startDate   DateTime
+  rules       String   @db.Text
+  status      String   @default("UPCOMING")
+  
+  applications Application[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Application {
+  id           String            @id @default(cuid())
+  userId       String
+  tournamentId String
+  status       ApplicationStatus @default(PENDING)
+  comment      String?
+  
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tournament   Tournament        @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+}
+
+model Verification {
+  id        String             @id @default(cuid())
+  userId    String
+  status    VerificationStatus @default(PENDING)
+  notes     String?
+  
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}

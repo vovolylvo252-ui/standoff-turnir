@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: turnir_db
+    environment:
+      POSTGRES_USER: turnir_user
+      POSTGRES_PASSWORD: turnir_password
+      POSTGRES_DB: turnir_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  web:
+    build: .
+    container_name: turnir_app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://turnir_user:turnir_password@postgres:5432/turnir_db?schema=public"
+      NEXTAUTH_URL: "http://localhost:3000"
+      NEXTAUTH_SECRET: "your-super-secret-key-change-it"
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:
