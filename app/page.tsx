@@ -74,7 +74,7 @@ export default function HomePage() {
   const [isFullWheelOpen, setIsFullWheelOpen] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);
   const [wheelRotation, setWheelRotation] = useState(0);
-  const [wheelResult, setWheelResult] = useState<{ title: string; subtitle: string; isWin: boolean } | null>(null);
+  const [wheelResult, setWheelResult] = useState<{ title: string; subtitle: string; isWin: boolean; isImage?: boolean; icon?: string } | null>(null);
 
   // Состояние ленты онлайн-выигрышей (без свайпа, меняется по таймеру от 1 до 5 сек)
   const [liveWins, setLiveWins] = useState<LiveWinItem[]>([
