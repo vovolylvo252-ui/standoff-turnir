@@ -431,14 +431,14 @@ export default function HomePage() {
         </div>
 
         {/* HEADER */}
-        <header className="sticky top-0 backdrop-blur-md bg-black/70 border-b border-orange-500/20 px-4 md:px-6 py-4 flex items-center justify-between shadow-2xl z-40">
-          <div onClick={handleLogoClick} className="cursor-pointer select-none active:scale-95 transition-transform inline-block">
-            <div className="flex items-center gap-2">
-              <img src="/logo1.png" alt="Logo" className="w-10 h-10 rounded-full object-cover border border-orange-500/30" />
-              <span className="text-xl font-bold tracking-wider text-white">Standoff 2 Turnir</span>
-            </div>
-          </div>
-        </header>
+<header className="sticky top-0 backdrop-blur-md bg-black/70 border-b border-orange-500/20 px-4 md:px-6 py-4 flex items-center justify-between shadow-2xl z-40">
+  <div onClick={handleLogoClick} className="cursor-pointer select-none active:scale-95 transition-transform inline-block">
+    <div className="flex items-center gap-2">
+      <img src="/logo1.png" alt="Logo" className="w-10 h-10 rounded-full object-cover border border-orange-500/30" />
+      <span className="text-xl font-bold tracking-wider text-white">Standoff 2 Turnir</span>
+    </div>
+  </div>
+</header>
           <nav className="hidden lg:flex items-center space-x-6 text-xs font-bold uppercase tracking-wider">
             <button onClick={() => setActiveModal(null)} className="hover:text-orange-400 transition-colors">Главная</button>
             <button onClick={() => setIsFullWheelOpen(true)} className="text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1 font-black">
