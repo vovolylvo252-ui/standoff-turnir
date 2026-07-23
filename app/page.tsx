@@ -452,25 +452,14 @@ export default function HomePage() {
   </nav>
 
   <div className="flex items-center space-x-2">
-    <button
-      onClick={() => setIsFullWheelOpen(true)}
-      className="flex items-center space-x-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-black px-3 py-1.5 rounded-xl shadow-[0_0_15px_rgba(251,191,36,0.4)] transition-all text-xs"
-    >
-      <Dices className="w-4 h-4" />
-      <span>Колесо</span>
-    </button>
-  </div>
-</header>
-
-          <div className="flex items-center space-x-2">
-            <button 
-              onClick={() => setIsFullWheelOpen(true)}
-              className="flex items-center space-x-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-black px-3 py-1.5 rounded-xl shadow-[0_0_15px_rgba(251,191,36,0.4)] transition-all text-xs"
-            >
-              <Dices className="w-4 h-4" />
-              <span>Колесо</span>
-            </button>
-
+  <button
+    onClick={() => setIsFullWheelOpen(true)}
+    className="flex items-center space-x-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-black px-3 py-1.5 rounded-xl shadow-[0_0_15px_rgba(251,191,36,0.4)] transition-all text-xs"
+  >
+    <Dices className="w-4 h-4" />
+    <span>Колесо</span>
+  </button>
+</div>
             {profile ? (
               <button 
                 onClick={() => setActiveModal('profile')}
